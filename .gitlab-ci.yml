@@ -19,17 +19,3 @@ before_script:
   stage: build
   script:
     ./mvnw clean install
-
-"Build Image":
-  image: docker:19.03.12
-  stage: package
-  dependencies:
-    - "Build"
-  services:
-    - docker:dind
-  before_script:
-    - docker info
-    - docker login -u sourabhberde -p 
-  script:
-    - docker build -t sourabhberde/spring-sftp:latest .
-    - docker push sourabhberde/spring-sftp:latest
