@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind : Deployment
+metadata:
+  name: sftp
+  labels:
+    app: sftp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sftp
+  template:
+    metadata:
+      labels:
+        app: sftp
+    spec:
+      volumes:
+      - name: sftp
+        emptyDir: {"BCA/Report"}
+      containers:
+      - name: sftp
+        image: atmoz/sftp
+        ports:
+        - containerPort: 22
+        volumeMounts:
+        - name: sftp
+          mountPath: home/user/
+        args:
+          - user:password:1001:1001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sftp
+spec:
+  selector:
+    app: sftp
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 22
+    targetPort: 22
+    nodePort: 30002
+
+

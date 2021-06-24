@@ -1,0 +1,31 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+sftp:
+  host: localhost
+  username: user
+  password: password
+
+---
+spring:
+  config:
+    activate:
+      on-profile: stage
+#  datasource:
+#    url: ${POSTGRES_URL}
+#    username: ${POSTGRES_USER}
+#    password: ${POSTGRES_PASSWORD}
+#    driverClassName: org.postgresql.Driver
+#sftp:
+#  host: ${SFTP_URL}
+#  username: ${SFTP_USERNAME}
+#  password: ${SFTP_PASSWORD}

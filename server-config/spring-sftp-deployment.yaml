@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-sftp-deployment
+  labels:
+    app: spring-sftp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-sftp
+  template:
+    metadata:
+      labels:
+        app: spring-sftp
+    spec:
+      containers:
+      - name: spring-sftp
+        image: sourabhberde/spring-sftp
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: spring-sftp-configmap
+              key: postgres_user
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: spring-sftp-configmap
+              key: postgres_password
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: spring-sftp-configmap
+              key: database_url
+        - name: SFTP_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: spring-sftp-configmap
+              key: sftp_url
+        - name: SFTP_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: spring-sftp-configmap
+              key: sftp_username
+        - name: SFTP_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: spring-sftp-configmap
+              key: sftp_password
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            configMapKeyRef:
+              name: spring-sftp-configmap
+              key: spring_stage_profile
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-sftp
+spec:
+  selector:
+    app: spring-sftp
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-sftp-configmap
+data:
+  postgres_user: postgres
+  postgres_password: postgres
+  database_url: jdbc:postgresql://postgres:5432/postgres
+  sftp_url: sftp
+  sftp_username: user
+  sftp_password: password
+  spring_stage_profile: stage
+
+
