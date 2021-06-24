@@ -21,6 +21,7 @@ before_script:
     ./mvnw clean install
 
 "Build Image":
+  image: docker:19.03.12
   stage: package
   dependencies:
     - "Build"
