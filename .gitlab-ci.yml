@@ -1,0 +1,22 @@
+stages:
+  - build
+  - package
+
+before_script=:
+  # try to connect gitlab
+  - echo CI_PROJECT_URL ${CI_PROJECT_URL} CI_COMMIT_REF_NAME $CI_COMMIT_REF_NAME
+  - echo CI_REGISTRY_USER $CI_REGISTRY_USER, CI_REGISTRY_PASSWORD $CI_REGISTRY_PASSWORD, CI_REGISTRY $CI_REGISTRY
+  - echo working directory `pwd` && echo user `whoami`
+
+"Build":
+  stage: build
+  script:
+    ./mvnw clean install
+
+"Build Image":
+  image: sourabhberde/spring-sftp:latest
+  stage: package
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
