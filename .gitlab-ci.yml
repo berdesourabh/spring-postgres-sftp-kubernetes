@@ -29,7 +29,7 @@ before_script:
     - docker:dind
   before_script:
     - docker info
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login -u sourabhberde -p S0urabh@123
   script:
     - docker build -t sourabhberde/spring-sftp:latest .
     - docker push sourabhberde/spring-sftp:latest
