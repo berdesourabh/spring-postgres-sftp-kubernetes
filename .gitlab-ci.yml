@@ -29,7 +29,7 @@ before_script:
     - docker:dind
   before_script:
     - docker info
-    - docker login -u sourabhberde -p S0urabh@123
+    - docker login -u sourabhberde -p 
   script:
     - docker build -t sourabhberde/spring-sftp:latest .
     - docker push sourabhberde/spring-sftp:latest
