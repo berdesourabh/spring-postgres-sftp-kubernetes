@@ -1,3 +1,10 @@
+cache:
+    key: "$CI_COMMIT_REF_NAME"
+    paths:
+        - .maven/
+
+image: maven:3-jdk-8
+
 stages:
   - build
   - package
